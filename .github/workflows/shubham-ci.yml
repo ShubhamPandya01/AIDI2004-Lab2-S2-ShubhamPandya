@@ -1,0 +1,24 @@
+name: Shubham Pandya CI Pipeline
+
+on: push
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint with flake8
+        run: flake8 . --count --max-line-length=100 --statistics
+
+      - name: Run unit tests
+        run: python -m unittest test_calculator.py -v
